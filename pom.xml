@@ -456,7 +456,7 @@
 		<!-- Integrate with Platform -->
 		<dependency>
 			<groupId>test</groupId>
-			<artifactId>connected-analytics-common</artifactId>
+			<artifactId>common-analytics</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<scope>runtime</scope>
 			<exclusions>
@@ -469,7 +469,7 @@
 
 		<dependency>
 			<groupId>test</groupId>
-			<artifactId>connected-analytics-engine</artifactId>
+			<artifactId>query-engine</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<scope>runtime</scope>
 		</dependency>
