@@ -1,18 +1,22 @@
 project_streaming_data_ingestion
 ================================
-### Datasource communicates with SaaS Central
-### SaaS Central injects contextual info into streams
-### Ingest streaming contextual data
-### Store incoming data into staging data store
-### Adhoc Analysis on staged data
-### ETL raw data into analytics store
-### Historical query on transformed , denormalized facts
+#### Datasource communicates with SaaS Central
+#### SaaS Central injects contextual info into streams
+#### Ingest streaming contextual data
+#### Store incoming data into staging data store
+#### Adhoc Analysis on staged data
+#### ETL raw data into analytics store
+#### Historical query on transformed , denormalized facts
 
-The Goal is to build a Data Integration App (discussed in a seperate git repo) and ingest contextual data in stateless manner and analyze the data
+The Goal is to build a Data Integration App (discussed in a seperate git repo) and ingest contextual data in stateless manner and analyze the data.
 
-### Ingest streaming data
 
-#### lets assume we are receiving marketing leads .
+
+#### Ingest streaming data
+
+[Source] Synchronous Bulk Batches / CSV Business records / Asynchronous Fire-n-Forget / Continuous Feeds 
+
+##### lets assume we are receiving marketing leads .
 <lead>
 <lead_id>123</leade_id>
 <company_name>TESCO</company_name>
@@ -30,9 +34,9 @@ The Goal is to build a Data Integration App (discussed in a seperate git repo) a
 <converted_date></converted_date>
 </lead>
 
-#### next we inject tenant_id , batch id and other business contexts into raw streams
+##### next we inject tenant_id , batch id and other business contexts into raw streams
 
-#### once data is stored, query in real-time bu Business User or automatically through ETL system
+##### once data is stored, query in real-time bu Business User or automatically through ETL system
 Ad-hoc example on MySQL : 
 select a.lead_id, a.company_name, a.created_date
 from lead a
@@ -41,3 +45,14 @@ and a.pkey < b.pkey
 where a.created_date <> b.created_date
 group by a.lead_id
 order by 1;
+
+> Data can stored into HDFS and HBASE can act as large scale ad hoc bigdata analytics engine
+> MongoDB can be used to create multi-tenenated collections 
+
+
+##### ETL process loads the staged data into analytics store
+Data Ingestion API can directly call ETL API or push messages to Queue to trigger ETL
+ ###### slowly changing dimensions (type I , type II)
+ ###### parallel runs 
+ ###### cascading logic
+ ###### dimension lookup from cache
