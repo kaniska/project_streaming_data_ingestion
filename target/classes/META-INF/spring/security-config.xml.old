@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+       xmlns:security="http://www.springframework.org/schema/security"  
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd  
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">  
+
+<!-- <security:global-method-security secured-annotations="enabled" /> -->
+	<!-- ======================== FILTER CHAIN ======================= -->
+
+	<!-- if you wish to use channel security, add "channelProcessingFilter," 
+		in front of "httpSessionContextIntegrationFilter" in the list below -->
+
+	<bean id="filterChainProxy" class="org.springframework.security.web.FilterChainProxy">
+		<property name="filterInvocationDefinitionSource">
+			<value>        
+			<![CDATA[CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON 
+			       PATTERN_TYPE_APACHE_ANT
+			               /**=securityContextHolderAwareRequestFilter,httpSessionContextIntegrationFilter,basicProcessingFilter,tenantSecurityContextFilter,exceptionTranslationFilter]]>
+			</value>
+		</property>
+	</bean>
+
+	<!-- ======================== AUTHENTICATION ======================= -->
+	<bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+		<property name="providers">
+			<list>
+				<ref bean="daoAuthenticationProvider" />
+			</list>
+		</property>
+	</bean>  <!-- Automatically receives AuthenticationEvent messages -->
+
+	<bean id="loggerListener"
+		class="org.springframework.security.authentication.event.LoggerListener" />
+
+	<!-- <bean id="basicProcessingFilter" class="org.springframework.security.ui.basicauth.BasicProcessingFilter"> 
+		<property name="authenticationManager"> <ref local="authenticationManager" 
+		/> </property> <property name="authenticationEntryPoint"> <ref local="basicProcessingFilterEntryPoint" 
+		/> </property> </bean> -->
+
+	<bean id="basicProcessingFilter"
+		class="com.test.test.platform.security.web.authentication.www.BasicAuthenticationFilter">
+		<property name="authenticationManager">
+			<ref local="authenticationManager" />
+		</property>
+		<property name="authenticationEntryPoint">
+			<ref local="basicProcessingFilterEntryPoint" />
+		</property>
+	</bean>
+
+	<bean id="basicProcessingFilterEntryPoint"
+		class="org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint">
+		<property name="realmName" value="test" />
+	</bean>
+
+
+	<bean id="httpSessionContextIntegrationFilter"
+		class="org.springframework.security.web.context.HttpSessionSecurityContextRepository" />
+
+	<!-- <bean id="logoutFilter" class="org.springframework.security.ui.logout.LogoutFilter"> 
+		<constructor-arg value="/index.jsp" /> URL redirected to after logout <constructor-arg> 
+		<list> <bean class="org.pentaho.platform.web.http.security.PentahoLogoutHandler" 
+		/> <bean class="org.springframework.security.ui.logout.SecurityContextLogoutHandler" 
+		/> </list> </constructor-arg> <property name="filterProcessesUrl" value="/Logout" 
+		/> </bean> -->
+
+	<bean id="securityContextHolderAwareRequestFilter"
+		class="org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter" />
+
+	<!-- <bean id="httpSessionReuseDetectionFilter"
+		class="org.pentaho.platform.web.http.security.HttpSessionReuseDetectionFilter">
+		<property name="filterProcessesUrl" value="/j_spring_security_check" />
+		<property name="sessionReuseDetectedUrl" value="/Login?login_error=2" />
+	</bean> -->
+
+	<!-- ===================== HTTP REQUEST SECURITY ==================== -->
+	
+	<!-- multitenant security -->
+        <bean id="tenantSecurityContextFilter" class="com.test.test.platform.security.web.http.filter.TenantSecurityContextFilter" />
+
+	<bean id="exceptionTranslationFilter"
+		class="org.springframework.security.web.access.ExceptionTranslationFilter">
+		<property name="authenticationEntryPoint">
+			<ref local="authenticationProcessingFilterEntryPoint" />
+		</property>
+		<property name="accessDeniedHandler">
+			<bean class="org.springframework.security.web.access.AccessDeniedHandlerImpl" />
+		</property>
+	</bean>
+
+
+	<!-- <bean id="authenticationProcessingFilter" class="org.springframework.security.ui.webapp.AuthenticationProcessingFilter"> 
+		<property name="authenticationManager"> <ref local="authenticationManager" 
+		/> </property> <property name="defaultTargetUrl" value="/Home" /> <property 
+		name="filterProcessesUrl" value="/j_spring_security_check" /> <property name="targetUrlResolver"> 
+		<bean id="targetUrlResolver" class="org.springframework.security.ui.TargetUrlResolverImpl"> 
+		<property name="justUseSavedRequestOnGet" value="true" /> </bean> </property> 
+		</bean> -->
+
+
+
+	<bean id="authenticationProcessingFilterEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<property name="loginFormUrl" value="/Login" />
+		<property name="forceHttps" value="false" />
+	</bean>
+
+<!-- 	<bean id="SimpleTenantSecurityContextFilter"
+		class="com.test.test.platform.security.web.http.SimpleTenantSecurityContextFilter" />
+ -->
+ 
+	<!-- <bean id="httpRequestAccessDecisionManager" class="org.springframework.security.vote.AffirmativeBased">
+		<property name="allowIfAllAbstainDecisions" value="false" />
+		<property name="decisionVoters">
+			<list>
+				<ref bean="roleVoter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="filterInvocationInterceptor"
+		class="org.springframework.security.intercept.web.FilterSecurityInterceptor">
+		<property name="authenticationManager">
+			<ref local="authenticationManager" />
+		</property>
+		<property name="accessDecisionManager">
+			<ref local="httpRequestAccessDecisionManager" />
+		</property>
+		<property name="objectDefinitionSource">
+			 <security:filter-invocation-definition-source>
+      		<security:intercept-url pattern="/api/**" access="Admin"/>
+      		<security:intercept-url pattern="\A/.*\Z" access="Authenticated"/>
+    		</security:filter-invocation-definition-source>
+		</property>
+	</bean>
+
+	<bean id="roleVoter" class="org.springframework.security.vote.RoleVoter">
+		<property name="rolePrefix" value="" />
+	</bean> -->
+
+</beans>

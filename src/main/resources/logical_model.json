@@ -1,0 +1,105 @@
+  {
+
+       "version": "1.0",
+
+       "name": "rev_opportunity",
+
+     "description": "Metadata for Revenue opportunity stage",
+
+     "dataSrcId": 100,  
+
+       "columns": [
+
+          {
+
+           "name": "name",
+
+           "dataType": "String",
+
+           "type:SCD-1",
+
+         "defaultValueIfNull":"",
+
+           "errorValue":""
+
+                      businessKey = false
+
+                       filterable = true
+
+          },
+
+          {
+
+           "name": "probability",
+
+           "dataType": "String",
+
+                      dataLength: 10
+
+                      "type:SCD-1",
+
+         "defaultValueIfNull":"",
+
+           "errorValue":""
+
+          },
+
+          {
+
+           "name": "last_update_date",
+
+           "dataType": "Date",
+
+                      "type:SCD-1",
+
+         "defaultValueIfNull":"",
+
+           "errorValue":""
+
+          },
+
+          {
+
+           "name": "isactive",
+
+           "dataType": "String",
+
+                      "type:SCD-1",
+
+         "defaultValueIfNull":"",
+
+           "errorValue":""
+
+          },
+
+          {
+
+           "name": "isclosed",
+
+           "dataType": "String",
+
+            "type:SCD-1",
+
+         "defaultValueIfNull":"",
+
+           "errorValue":""
+
+          },
+
+          {
+
+           "name": "iswon",
+
+           "dataType": "String",
+
+            "type:SCD-1",
+
+         "defaultValueIfNull":"",
+
+           "errorValue":""
+
+          },
+
+       ]
+
+     }    
