@@ -3,6 +3,8 @@ project_streaming_data_ingestion
 
 Contextual Data Transfer Protocol advocates a stateless multi-tenanted system with self-defined independent immutable contextual records ensuring data isolation, tenanted schema creation, data sclalability, sharding, auto-rollback through TIME-MACHINE , auto-restartable , multiple contextual views .
 
+BI Data Analysis involves various types of models --  DYNAMIC LOGICAL MODELS (star schema, denarmalized flat tables, snowflake, ad-hoc schema) , DATA MANAGEMENT MODELS ( sources, data sets, groups) , DATA PROCESSING MODELS (Streaming-stage, Scheduling-stage, Trigering-stage, Query-execution-stage etc) , QUERY LANG MODEL (Dynamic KPI , SQL, Json, DSL) , OLAP MODEL (Stats func(), UDF)
+
 ##### Datasource communicates with SaaS Central
 ##### SaaS Central injects contextual info into streams
 ##### Ingest streaming contextual data
