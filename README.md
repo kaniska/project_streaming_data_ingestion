@@ -22,23 +22,22 @@ The Goal is to build a Data Integration App (discussed in a seperate git repo) a
 
 ###### Data Integrator : lets assume Data Source (CRM channels) sending marketing leads or Data Integrator polling/pulling the feeds periodically 
 
-###### Packet Optimization
-<lead>
-<lead_id>123</leade_id>
-<company_name>TESCO</company_name>
-<industry>RETAIL</industry>
-<owner_employee_id>567</owner_employee_id>
-<created_date></created_date>
-<last_modified_date></last_modified_date>
-<lead_status>DISCOVERY</lead_status>
-<lead_source>EMAIL</lead_source>
-<country>UK</country>
-<state>OR</state>
-<city>LONDON</city>
-<converted_opportunity_id></converted_opportunity_id>
-<converted_account_id></converted_account_id>
-<converted_date></converted_date>
-</lead>
+lead -
+lead_id : 123
+company_name: TESCO
+industry : RETAIL
+owner_employee_id : 567
+created_date: 
+last_modified_date:
+lead_status>DISCOVERY
+lead_source:EMAIL
+country:UK
+state:
+cit:LONDON
+converted_opportunity_id:
+converted_account_id:
+converted_date:
+lead>
 
 ###### SaaS Ingestion Layer : it can inject tenant_id , batch id , app id , timestamp, schema info and other business contexts into raw streams
 > Data Ingestion can maintain a TIME_MACHINE table where every single batch will maintain current tx start time and last successful tx end time.
